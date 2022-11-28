@@ -23,7 +23,7 @@ Other examples shown are:
 
 I haven't gotten to api security so there may be more. My primary issue is that I cannot unsecure index.html. With Spring Boot 3 (or really Spring Security 6) we move from antMatchers to requestMatchers. This syntax no longer works as it did before:
 
-"""
+```java
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -45,19 +45,19 @@ public class SecurityConfig {
                         .accessDeniedPage("/error/accessDenied.html"));
         return http.build();
 }
-"""
+```
 
 No matter what I do, the .requestMatchers("/").permitAll() does not work. I am prompted for credentials is why it doesn't work.
 The other issue I ran into was that:
 
-"""
+```java
 .requestMatchers("/unsecured/**").permitAll()
-"""
+```
 
 no longer worked. You have to now enter:
 
-"""
+```java
 .requestMatchers("/unsecured*/**").permitAll()
-"""
+```
 
 Notice the entra* before the last slash. Not the end of the world though.
