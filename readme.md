@@ -2,6 +2,13 @@
 
 While playing around with Spring boot 3 and trying to implement JWT I kept running into issues. This playground project was my attempt to make it all make sense but I kept running into issues. Putting my upgrade to Spring boot 3 on hold due to security.
 
+### JPA backed UserDetails
+
+Have things working in the latest 2.x Spring Boot series... going to keep building things out here. Next stop is to replace InMemoryUserDetailsManager with a UserDetailService that stores users into a database. Here are my sources:
+
+- Youtube: [https://www.youtube.com/watch?v=awcCiqBO36E](https://www.youtube.com/watch?v=awcCiqBO36E)
+- Github: [https://github.com/danvega/jpa-security](https://github.com/danvega/jpa-security)
+
 ## How to use
 
 Project is a simple maven project with no setup required. Just build and start it up.
@@ -15,9 +22,9 @@ Then, to experience Spring security in all its glory:
 
 Other examples shown are:
 
-* what happens when you attempt to access an admin location with the plain user account. There's a customized accessDenied.html page shown
-* what happens when you attempt to access a location that doesn't exist
-* finally, you can log out
+- what happens when you attempt to access an admin location with the plain user account. There's a customized accessDenied.html page shown
+- what happens when you attempt to access a location that doesn't exist
+- finally, you can log out
 
 ## Issues
 
@@ -48,16 +55,19 @@ public class SecurityConfig {
 ```
 
 No matter what I do, the .requestMatchers("/").permitAll() does not work. I am prompted for credentials is why it doesn't work.
+
 The other issue I ran into was that:
 
 ```java
 .requestMatchers("/unsecured/**").permitAll()
 ```
 
-no longer worked. You have to now enter:
+no longer worked, you were prompted for credentials on the immediate route /unsecured.
+
+You have to now enter:
 
 ```java
 .requestMatchers("/unsecured*/**").permitAll()
 ```
 
-Notice the entra* before the last slash. Not the end of the world though.
+Notice the extra * before the slash. Not the end of the world though since it works with the additional asterisk...
