@@ -20,9 +20,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers("/", "/unsecured*/**").permitAll()
-                        .antMatchers("/admin*/**").hasRole("ADMIN")
-                        // .antMatchers("/").permitAll()
+                        .antMatchers("/", "/unsecured/**").permitAll()
+                        .antMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()) // this covers ALL other places not mentioned above, requiring
                                                        // for any other locations you must be authenticated
                 .formLogin(Customizer.withDefaults())
